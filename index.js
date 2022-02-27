@@ -24,7 +24,7 @@ mongoose.connect(process.env.DB_CONNECT,{})
 
 
 app.get('/', (req, res) => {
-  res.send('hello world')
+  res.send('API running successful')
 })
 
 app.use(express.json({ extended: false }))
