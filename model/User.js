@@ -23,10 +23,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  createAt: {
-    type: Date,
-    dafault: Date.now
-  },
   updateAt: {
     type: Date,
     default: Date.now
