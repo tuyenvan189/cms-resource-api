@@ -1,0 +1,54 @@
+const router = require('express').Router();
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const { check, validationResult } = require('express-validator') 
+
+// model
+const Photo = require('../model/Photo');
+
+// @route GET api/photo
+router.get('/photo', async (req, res) => {
+    try {
+        const photos = await Photo.find().sort({data: -1});
+        const result = {
+            data : photos,
+            isSuccess: true
+        }
+        res.status(200).json(result);
+    } catch {
+
+    } finally {
+        
+    }
+})
+
+// @route POST api/photo/add
+router.post('/add', async(req, res) => {
+    const id = req.body.id || '';
+    const name = req.body.nameame || '';
+    const photo = req.body.photo || '';
+    const description = req.body.description || '';
+
+    // create a new photo
+    const photoCard = new Photo({
+        id,
+        name,
+        photo,
+        description
+    })
+    try {
+        await photo.save();
+        res.json({
+            msg: 'Register Successfully!',
+            isSuccess: true
+        })
+    } catch(err) {
+        res.status(500).json({
+            msg: err,
+            isSuccess: false
+        })
+    }
+    console.log('req: ', req.body)
+})
+
+module.exports = router;

@@ -7,6 +7,7 @@ dotenv.config()
 app.use(cors())
 //routes
 const usersRoute = require('./routes/user')
+const photosRoute = require('./routes/photo')
 // const authRoute = require('./routes/auth')
 // const filmRoute = require('./routes/film')
 // env
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 app.use(express.json({ extended: false }))
 app.use('/api/user', usersRoute)
+app.use('/api/photo', photosRoute)
 // app.use('/api/auth', authRoute)
 // app.use('/api/film', filmRoute)
 
