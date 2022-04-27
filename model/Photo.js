@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    name: {
+    title: {
         type: String
     },
     image: {

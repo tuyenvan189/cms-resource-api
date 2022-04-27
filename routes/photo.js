@@ -15,25 +15,26 @@ router.get('/photo', async (req, res) => {
             isSuccess: true
         }
         res.status(200).json(result);
-    } catch {
-
-    } finally {
-        
-    }
+    } catch(err) {
+        res.status(500).json({
+            msg: 'Server Error',
+            isSuccess: false
+        })
+    } 
 })
 
 // @route POST api/photo/add
 router.post('/add', async(req, res) => {
     const id = req.body.id || '';
-    const name = req.body.nameame || '';
-    const photo = req.body.photo || '';
+    const title = req.body.title || '';
+    const image = req.body.image || '';
     const description = req.body.description || '';
 
     // create a new photo
-    const photoCard = new Photo({
+    const photo = new Photo({
         id,
-        name,
-        photo,
+        title,
+        image,
         description
     })
     try {
