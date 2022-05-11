@@ -40,7 +40,7 @@ router.post('/add', async(req, res) => {
     try {
         await photo.save();
         res.json({
-            msg: 'Register Successfully!',
+            msg: 'Added Successfully!',
             isSuccess: true
         })
     } catch(err) {
