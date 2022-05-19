@@ -1,7 +1,4 @@
-# User API
-# Photo API
-# Product API
-# Film API
+# User API - Photo API - Product API - Film API
 
 ## Scripts
 
