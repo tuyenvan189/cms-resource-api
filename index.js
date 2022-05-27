@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 app.use(express.json({ extended: false }))
 app.use('/api/user', usersRoute)
 app.use('/api/photo', photosRoute)
-app.use('./api/product', productsRoute)
+app.use('/api/product', productsRoute)
 // app.use('/api/auth', authRoute)
 // app.use('/api/film', filmRoute)
 
