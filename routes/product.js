@@ -1,16 +1,14 @@
 const router = require('express').Router();
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { check, validationResult } = require('express-validator')
+const { check, validationResult } = require('express-validator');
 
 // middlewares
-const auth = require('../middlewares/auth')
+// const auth = require('../middlewares/auth')
 
 // model
 const Product = require('../model/Product')
 
 // @route GET api/product
-// @desc get user list
+// @desc get product list
 // @access Public
 router.get('/', async (req, res) => {
 
@@ -46,6 +44,139 @@ router.get('/', async (req, res) => {
             isSuccess: false
         })
     }
+})
+
+// @route    POST api/product
+// @desc     Add new product
+// @access   public
+router.post('/', [ 
+  check('sub_name', 'Sub Name is required').not().isEmpty(),
+  check('name', 'name is required').not().isEmpty(),
+  check('price', 'Price is required').not().isEmpty(),
+  check('image', 'Image is required').not().isEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  const { image, sub_name, name, price, promo_price } = req.body;
+
+  console.log(req.body)
+  const newProduct = new Product({
+    sub_name,
+    name,
+    price,
+    promo_price,
+    image,
+  })
+
+  try {
+    const product = await newProduct.save();
+    res.status(200).json({
+      data: product,
+      msg: 'Add successfully!',
+      isSucess: true
+    })
+  } catch(err) {
+    res.status(500).json({
+      msg: `Server Error`,
+      isSucess: false
+    })
+  }
+})
+
+// @route    GET api/product/:id
+// @desc     GET Product
+// @access   Public
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    const product = await Product.findById(id);
+    res.status(200).json({
+      data: product,
+      isSucess: true
+    })
+  } catch(err) {
+    res.status(400).json({
+      msg: 'Photo not found',
+      isSucess: false
+    })
+  }
+})
+
+// @route    PUT api/product
+// @desc     Update Product
+// @access   Public
+router.put('/:id', [
+    check('sub_name', 'Sub Name is required').not().isEmpty(),
+    check('name', 'name is required').not().isEmpty(),
+    check('price', 'Price is required').not().isEmpty(),
+    check('image', 'Image is required').not().isEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  const id = req.params.id;
+  const { image, sub_name, name, price, promo_price } = req.body;
+
+  const fields = {};
+  if (image) fields.image = image;
+  if (sub_name) fields.sub_name = sub_name;
+  if (name) fields.name = name;
+  if (price) fields.price = price;
+  if (promo_price) fields.promo_price = promo_price;
+
+  try {
+    const product = await Product.findOneAndUpdate(
+      { _id: id },
+      { $set: fields },
+      { new: true }
+    );
+    if(!product) {
+      return res.status(400).json({
+        data: 'Photo not found',
+        isSucess: false
+      })
+    }
+    res.status(200).json({
+      msg: 'Update successfully!',
+      isSucess: true
+    })
+  } catch(err) {
+    res.status(500).json({
+      msg: `Server Error`,
+      isSucess: false
+    })
+  }
+})
+
+// @route    DELETE api/product
+// @desc     Delete Product
+// @access   Public
+router.delete('/:id', async (req, res) => {
+  const productId = req.params.id;
+  
+  try {
+    const product = await Product.findOneAndRemove({ _id: productId });
+    if(!product) {
+      return res.status(400).json({
+        msg: `Product not found`,
+        isSucess: false
+      })
+    }
+    res.status(200).json({
+      msg: 'Delete successfully!',
+      isSucess: true
+    })
+  } catch(err) {
+    res.status(500).json({
+      msg: `Server Error`,
+      isSucess: false
+    })
+  }
 })
 
 module.exports = router;
