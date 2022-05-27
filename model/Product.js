@@ -16,7 +16,6 @@ const productSchema = new mongoose.Schema({
   },
   promo_price: {
     type: String,
-    required: true,
     min: 6
   },
   image: {
@@ -30,3 +29,4 @@ const productSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('Product', productSchema)
+
