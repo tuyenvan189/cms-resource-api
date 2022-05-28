@@ -10,7 +10,7 @@ const usersRoute = require('./routes/user')
 const photosRoute = require('./routes/photo')
 const productsRoute = require('./routes/product')
 // const authRoute = require('./routes/auth')
-// const filmRoute = require('./routes/film')
+const filmRoute = require('./routes/film')
 // env
 const PORT = process.env.PORT || 8000
 
@@ -34,7 +34,7 @@ app.use('/api/user', usersRoute)
 app.use('/api/photo', photosRoute)
 app.use('/api/product', productsRoute)
 // app.use('/api/auth', authRoute)
-// app.use('/api/film', filmRoute)
+app.use('/api/film', filmRoute)
 
 app.listen(PORT, () => {
   console.log(`Server is running at PORT ${PORT}`)
