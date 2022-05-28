@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 
 //model
-const Film = require('../model/User')
+const Film = require('../model/Film')
 
 router.get('/', async (req, res) => {
     // pagination ( test -> Postman: localhost:8000/api/user?page=2&limit=3 )
