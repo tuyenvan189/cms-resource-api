@@ -45,7 +45,7 @@ router.get('/', async (req, res) => {
 // @eoute POST api/film/create
 // @desc Create film
 // @access Public
-route.post('/create', async(req,res) => {
+router.post('/create', async(req,res) => {
     const title = req.body.title || '';
     const yearRelease = req.body.yearRelease || '';
     const cast = req.body.cast || '';
