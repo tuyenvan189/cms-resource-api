@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 
 
 //model
-const Film = require('../model/Film')
+const Film = require('../model/Film');
+const { route } = require('./user');
 
 router.get('/', async (req, res) => {
     // pagination ( test -> Postman: localhost:8000/api/user?page=2&limit=3 )
@@ -36,6 +37,47 @@ router.get('/', async (req, res) => {
     } catch (err) {
         res.status(500).json({
             msg: 'Server Error',
+            isSuccess: false
+        })
+    }
+})
+
+// @eoute POST api/film/create
+// @desc Create film
+// @access Public
+route.post('/create', async(req,res) => {
+    const title = req.body.title || '';
+    const yearRelease = req.body.yearRelease || '';
+    const cast = req.body.cast || '';
+    const image = req.body.image || '';
+    const description = req.body.description || '';
+
+    // check film exist
+    const isFilmExist = await Film.findOne({ title });
+    if (isFilmExist) {
+        return res.status(400).json({
+            msg: 'Film already exists',
+            isSuccess: false
+        })
+    }
+
+    // create a new film
+    const film = new Film({
+        title,
+        yearRelease,
+        cast,
+        image,
+        description
+    })
+    try {
+        await film.save();
+        res.json({
+            msg: 'Create successfully',
+            isSuccess: true
+        })
+    } catch(err) {
+        res.status(500).json({
+            msg: err,
             isSuccess: false
         })
     }
