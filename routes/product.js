@@ -11,8 +11,7 @@ const Product = require('../model/Product')
 // @desc get product list
 // @access Public
 router.get('/', async (req, res, next) => {
-  if (req.session.user) return next();
-  return next(new NotAuthorizedError());
+  
 
     // pagination ( test -> Postman: localhost:8000/api/user?page=2&limit=3 )
     const page = parseInt(req.query.page || 1) 
@@ -110,7 +109,7 @@ router.get('/:id', async (req, res) => {
 // @route    PUT api/product
 // @desc     Update Product
 // @access   Public
-router.put('/edit/:id', [
+router.put('/:id', [
     check('sub_name', 'Sub Name is required').not().isEmpty(),
     check('name', 'name is required').not().isEmpty(),
     check('price', 'Price is required').not().isEmpty(),
@@ -158,7 +157,7 @@ router.put('/edit/:id', [
 // @route    DELETE api/product
 // @desc     Delete Product
 // @access   Public
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const productId = req.params.id;
   
   try {
