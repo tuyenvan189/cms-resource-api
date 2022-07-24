@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
 // @route    POST api/product
 // @desc     Add new product
 // @access   public
-router.post('/', [ 
+router.post('/add', [ 
   check('sub_name', 'Sub Name is required').not().isEmpty(),
   check('name', 'name is required').not().isEmpty(),
   check('price', 'Price is required').not().isEmpty(),
@@ -108,7 +108,7 @@ router.get('/:id', async (req, res) => {
 // @route    PUT api/product
 // @desc     Update Product
 // @access   Public
-router.put('/:id', [
+router.put('/edit/:id', [
     check('sub_name', 'Sub Name is required').not().isEmpty(),
     check('name', 'name is required').not().isEmpty(),
     check('price', 'Price is required').not().isEmpty(),
@@ -156,7 +156,7 @@ router.put('/:id', [
 // @route    DELETE api/product
 // @desc     Delete Product
 // @access   Public
-router.delete('/:id', async (req, res) => {
+router.delete('delete/:id', async (req, res) => {
   const productId = req.params.id;
   
   try {
