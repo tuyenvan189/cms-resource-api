@@ -10,7 +10,9 @@ const Product = require('../model/Product')
 // @route GET api/product
 // @desc get product list
 // @access Public
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
+  if (req.session.user) return next();
+  return next(new NotAuthorizedError());
 
     // pagination ( test -> Postman: localhost:8000/api/user?page=2&limit=3 )
     const page = parseInt(req.query.page || 1) 
