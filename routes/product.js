@@ -156,7 +156,7 @@ router.put('/edit/:id', [
 // @route    DELETE api/product
 // @desc     Delete Product
 // @access   Public
-router.delete('delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   const productId = req.params.id;
   
   try {
